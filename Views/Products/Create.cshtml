@@ -1,0 +1,76 @@
+﻿@model GroceryStore.Models.Product
+
+@{
+    ViewData["Title"] = "Create Product";
+}
+
+<h2 class="text-center text-primary">Create Product</h2>
+
+<div class="container mt-4">
+    <form asp-action="Create" enctype="multipart/form-data" class="border p-4 shadow-sm bg-light rounded">
+
+        <div class="mb-3">
+            <label asp-for="Name" class="form-label fw-bold"></label>
+            <input asp-for="Name" class="form-control" placeholder="Enter product name" />
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="CategoryID" class="form-label fw-bold"></label>
+            <select asp-for="CategoryID" asp-items="ViewBag.CategoryID" class="form-select">
+                <option value="">-- Select Category --</option>
+            </select>
+            <span asp-validation-for="CategoryID" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="SupplierID" class="form-label fw-bold"></label>
+            <select asp-for="SupplierID" asp-items="ViewBag.SupplierID" class="form-select">
+                <option value="">-- Select Supplier --</option>
+            </select>
+            <span asp-validation-for="SupplierID" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Price" class="form-label fw-bold"></label>
+            <input asp-for="Price" class="form-control" placeholder="Enter price" />
+            <span asp-validation-for="Price" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="StockQty" class="form-label fw-bold"></label>
+            <input asp-for="StockQty" class="form-control" placeholder="Enter stock quantity" />
+            <span asp-validation-for="StockQty" class="text-danger"></span>
+        </div>
+
+        <!-- File Upload -->
+        <div class="mb-3">
+            <label class="form-label fw-bold">Upload Product Image</label>
+            <input type="file" name="ImageFile" id="imageUpload" class="form-control" accept="image/*" onchange="previewImage(event)" />
+            <span asp-validation-for="ImageUrl" class="text-danger"></span>
+        </div>
+
+        <!-- Image Preview -->
+        <div class="text-center mb-3">
+            <img id="imagePreview" src="#" alt="Image Preview" class="img-thumbnail d-none" style="max-width: 200px;" />
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Create Product</button>
+    </form>
+</div>
+
+<!-- JavaScript for Image Preview -->
+<script>
+    function previewImage(event) {
+        var input = event.target;
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            var img = document.getElementById('imagePreview');
+            img.src = reader.result;
+            img.classList.remove('d-none');
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
+</script>

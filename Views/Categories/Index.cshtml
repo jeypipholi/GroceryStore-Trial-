@@ -1,0 +1,72 @@
+﻿@model IEnumerable<GroceryStore.Models.Category>
+
+@{
+    ViewData["Title"] = "Categories";
+}
+
+<h2 class="text-center text-primary">Category List</h2>
+
+<p>
+    <a asp-action="Create" class="btn btn-success mb-3">Create New Category</a>
+</p>
+
+<div class="table-responsive">
+    <table class="table table-bordered table-hover shadow-sm">
+        <thead class="table-dark">
+            <tr>
+                <th>Category Name</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var category in Model)
+            {
+                <tr class="table-primary">
+                    <td><strong>@category.Name</strong></td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@category.CategoryID" class="btn btn-warning btn-sm">Edit</a>
+                        <a asp-action="Details" asp-route-id="@category.CategoryID" class="btn btn-info btn-sm">Details</a>
+                        <a asp-action="Delete" asp-route-id="@category.CategoryID" class="btn btn-danger btn-sm">Delete</a>
+                    </td>
+                </tr>
+
+                <!-- Products under this Category -->
+                @if (category.Products != null && category.Products.Any())
+                {
+                    <tr>
+                        <td colspan="2">
+                            <div class="card p-3 bg-light">
+                                <h5 class="text-success">Products</h5>
+                                <table class="table table-sm">
+                                    <thead class="table-secondary">
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Price</th>
+                                            <th>Stock Qty</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var product in category.Products)
+                                        {
+                                            <tr>
+                                                <td>@product.Name</td>
+                                                <td>@product.Price.ToString("C", new System.Globalization.CultureInfo("en-PH"))</td>
+                                                <td>@product.StockQty</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="2" class="text-center text-muted">No products in this category.</td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>
